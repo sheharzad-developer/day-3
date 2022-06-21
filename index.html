@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<style>
+     #div1,
+        #div2 {
+            float: left;
+            width: 100px;
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid black;
+        }
+        
+        #div1 ul,
+        #div2 li {
+            list-style: none;
+        }
+        
+        .box1,
+        .box2,
+        .box3,
+        .box4,
+        .box5,
+        .box6,
+        .box7,
+        .box8 {
+            width: auto;
+            height: 40px;
+            background-color: red;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid black;
+        }
+        
+        .box2 {
+            background-color: greenyellow;
+        }
+        
+        .box3 {
+            background-color: hotpink;
+        }
+        
+        .box4 {
+            background-color: lawngreen;
+        }
+        
+        .box5 {
+            background-color: lightseagreen;
+        }
+        
+        .box6 {
+            background-color: mediumpurple;
+        }
+        
+        .box7 {
+            background-color: olive;
+        }
+        
+        .box8 {
+            background-color: peru;
+        }
+</style>
+</head>
+
+<body>
+
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" data-draggable="target">
+        <div class="box1" draggable="true" ondragstart="drag(event)" id="drag1" data-draggable="item">a</div>
+        <div class="box2" draggable="true" ondragstart="drag(event)" id="drag2" data-draggable="item">b</div>
+        <div class="box3" draggable="true" ondragstart="drag(event)" id="drag3" data-draggable="item">c</div>
+        <div class="box4" draggable="true" ondragstart="drag(event)" id="drag4" data-draggable="item">d</div>
+        <div class="box5" draggable="true" ondragstart="drag(event)" id="drag5" data-draggable="item">e</div>
+        <div class="box6" draggable="true" ondragstart="drag(event)" id="drag6" data-draggable="item">f</div>
+        <div class="box7" draggable="true" ondragstart="drag(event)" id="drag7" data-draggable="item">g</div>
+        <div class="box8" draggable="true" ondragstart="drag(event)" id="drag8" data-draggable="item">h</div>
+    </div>
+
+    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" data-draggable="target"></div>
+
+</body>
+<script>
+(function() {
+
+if (!document.querySelectorAll ||
+    !('draggable' in document.createElement('span')) ||
+    window.opera
+) {
+    return;
+}
+
+for (var items = document.querySelectorAll('[data-draggable="item"]'),
+        len = items.length,
+        i = 0; i < len; i++) {
+    items[i].setAttribute('draggable', 'true');
+}
+
+var item = null;
+
+document.addEventListener('dragstart', function(e) {
+    item = e.target;
+    e.dataTransfer.setData('text', '');
+
+}, false);
+
+document.addEventListener('dragover', function(e) {
+    if (item) {
+        e.preventDefault();
+    }
+
+}, false);
+
+document.addEventListener('drop', function(e) {
+    if (e.target.getAttribute('data-draggable') == 'target') {
+        e.target.appendChild(item);
+
+        e.preventDefault();
+    }
+
+}, false);
+
+document.addEventListener('dragend', function(e) {
+    item = null;
+
+}, false);
+
+})();
+
+</script>
+</html>
